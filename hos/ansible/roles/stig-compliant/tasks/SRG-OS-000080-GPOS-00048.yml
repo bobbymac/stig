@@ -1,0 +1,47 @@
+#
+# (c) Copyright 2016 Hewlett Packard Enterprise Development Company LP
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+---
+
+- name: SRG-OS-000080-GPOS-00048 | deploy | check for grub superusers
+  become: yes
+  shell:
+    "grep 'set superusers=' -r /etc/grub.d/. || true"
+  args:
+    executable: /bin/bash
+  register: grub_result
+  changed_when: grub_result.stdout == ""
+
+- name: SRG-OS-000080-GPOS-00048 | deploy | generate encrypted password
+  become: yes
+  shell:
+    "echo -e '{{ grub_su_pwd }}\n{{ grub_su_pwd }}' | grub-mkpasswd-pbkdf2 | awk '/grub.pbkdf/{print$NF}'"
+  args:
+    executable: /bin/bash
+  when: grub_result.stdout == ""
+  register: grub_encrypted_pwd
+
+
+- name: SRG-OS-000080-GPOS-00048 | deploy | add superusers to grub config
+  become: yes
+  lineinfile: 
+    dest: /etc/grub.d/40_custom
+    line: "{{ item }}"
+  with_items:
+    - "set superusers=\"root\""
+    - "password_pbkdf2 root {{ grub_encrypted_pwd.stdout }}"
+  when: grub_result.stdout == ""
+  notify: update grub
+

@@ -1,0 +1,23 @@
+---
+# handlers file for stig
+
+  - name: restart auditd
+    service:
+      name: auditd
+      state: restarted
+      enabled: yes
+
+  - name: restart ssh
+    service:
+      name: ssh
+      state: restarted
+      enabled: yes
+
+  - name: Reload audit rules
+    become: yes
+    shell: auditctl -R /etc/audit/audit.rules
+
+
+  - name: update grub
+    become: yes
+    shell: /usr/sbin/update-grub

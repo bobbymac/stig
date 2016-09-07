@@ -1,0 +1,68 @@
+#
+# (c) Copyright 2015 Hewlett Packard Enterprise Development Company LP
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+---
+
+  - name: SRG-OS-000029-GPOS-00010 | deploy | ensure /etc/screenrc exists
+    stat:
+      path: /etc/screenrc
+    register: screenrc_file
+
+
+  - name: SRG-OS-000029-GPOS-00010 | deploy | create /etc/screenrc if it doesn't exist
+    become: yes
+    template:
+      src: screenrc.j2
+      dest: /etc/screenrc
+      owner: root
+      group: root
+      mode: 0644
+    when: screenrc_file.stat.exists == False
+
+
+  - name: Update | Config | Update /etc/screenrc file
+    lineinfile:
+      dest: /etc/screenrc
+      #regexp: '^\#Banner*'
+      line: 'idle 900 lockscreen'
+      #backrefs: yes
+    tags: srg-screenlock
+
+  - name: Update | Config | Disable banner in /etc/screenrc file
+    lineinfile:
+      dest: /etc/screenrc
+      #regexp: '^\#Banner*'
+      line: 'startup_message off'
+      #backrefs: yes
+    tags: srg-screenlock
+
+  - name: SRG-OS-000029-GPOS-00010 | deploy | create pam.d config file for screen
+    lineinfile:
+      dest: /etc/pam.d/screen
+      line: "auth    required    pam_unix.so"
+      create: yes
+
+  - name: SRG-OS-000029-GPOS-00010 | deploy | set screen shell, logging, and msg wait
+    become: yes
+    lineinfile:
+      dest: /etc/screenrc
+      line: "{{ item }}"
+    with_items:
+      - shell /bin/bash
+      - defshell /bin/bash
+      - deflog on
+      - logstamp on
+      - logfile /tmp/$USER
+      - msgwait 0

@@ -1,0 +1,42 @@
+---
+# vars file for stig
+
+
+
+##### Vars for the pam_cracklib section of /etc/pam.d/common-password, where negative numbers indicate minimum required
+## minimum numbers of special characters 
+pwd_special_characters: -1
+## minimum number of uppercase characters
+pwd_uppercase_characters: -1
+## minimum number of lowercase characters
+pwd_lowercase_characters: -1
+##  minimum number of deciaml characters
+pwd_decimal_characters: -1
+## minimum number of differing characters after a change
+pwd_different_chars_after_change: 8
+## minimum password length
+pwd_minimum_length: 15
+
+##### Vars for logserver
+## remote server to ship logs to
+log_server: server.spoof.domain
+
+
+
+##### Vars for the pam_unix section
+## previous passwords to remember
+pwd_remember_count: 5
+ 
+
+##### Vars for auditd.conf
+## admin space left for alert/action
+aud_admin_space_left: 50
+## audit space left for alert/action
+aud_space_left: 75
+
+
+
+##### Vars for grub encrypted passwords
+## password to use for root account *NOT the root pwd*
+## YOU WILL NEED THIS PASSWORD TO PASS THE GRUB MENU ON SYSTEM STARTUP
+grub_su_pwd: password
