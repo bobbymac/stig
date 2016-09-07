@@ -31,7 +31,7 @@
   lineinfile:
     dest: /etc/audit/auditd.conf
     regexp: '^space_left_action ='
-    line: "space_left_action = EMAIL"
+    line: "space_left_action = {{ aud_space_left_act }}"
   notify:
     - Reload audit rules
 
@@ -51,7 +51,7 @@
   lineinfile:
     dest: /etc/audit/auditd.conf
     regexp: '^disk_full_action ='
-    line: "disk_full_action = HALT"
+    line: "disk_full_action = {{ aud_disk_full_act }}"
   notify:
     - Reload audit rules
 
@@ -61,7 +61,7 @@
   lineinfile: 
     dest: /etc/audit/auditd.conf
     regexp: '^admin_space_left_action ='
-    line: "admin_space_left_action = SINGLE"
+    line: "admin_space_left_action = {{ adm_space_left_act }}"
   notify:
     - Reload audit rules
 
@@ -72,6 +72,6 @@
   lineinfile: 
     dest: /etc/audit/auditd.conf
     regexp: '^disk_error_action ='
-    line: "disk_error_action = HALT"
+    line: "disk_error_action = {{ disk_err_act }}"
   notify:
     - Reload audit rules

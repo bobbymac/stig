@@ -13,6 +13,8 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 #
+
+# to add additional packages add them to the list in stig/my_cloud/definition/data/stig_vars.yml
 ---
 
 - name: Install | Install package prerequisites for STIG enforcements

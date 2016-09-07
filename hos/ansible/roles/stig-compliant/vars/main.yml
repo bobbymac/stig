@@ -33,7 +33,14 @@ pwd_remember_count: 5
 aud_admin_space_left: 50
 ## audit space left for alert/action
 aud_space_left: 75
-
+## action to take when audit space remaining is low
+aud_space_left_act: EMAIL
+## action to take when the audit dosk is full
+aud_disk_full_act: HALT
+## action to take when admin audit space remaining is low
+adm_space_left_act: SINGLE
+## action to take on disk errors
+disk_err_act: HALT
 
 
 ##### Vars for grub encrypted passwords

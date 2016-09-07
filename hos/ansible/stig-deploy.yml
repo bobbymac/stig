@@ -16,7 +16,7 @@
 ---
 
 # install required packages on all nodes part of the cloud
- - hosts: all
+ - hosts: resources
    become: yes
    roles:
      - stig-compliant

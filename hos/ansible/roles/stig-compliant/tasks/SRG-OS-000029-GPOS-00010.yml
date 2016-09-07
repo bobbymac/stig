@@ -35,17 +35,13 @@
   - name: Update | Config | Update /etc/screenrc file
     lineinfile:
       dest: /etc/screenrc
-      #regexp: '^\#Banner*'
       line: 'idle 900 lockscreen'
-      #backrefs: yes
     tags: srg-screenlock
 
   - name: Update | Config | Disable banner in /etc/screenrc file
     lineinfile:
       dest: /etc/screenrc
-      #regexp: '^\#Banner*'
       line: 'startup_message off'
-      #backrefs: yes
     tags: srg-screenlock
 
   - name: SRG-OS-000029-GPOS-00010 | deploy | create pam.d config file for screen
