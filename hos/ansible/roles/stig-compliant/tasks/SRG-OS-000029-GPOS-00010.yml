@@ -50,7 +50,7 @@
       line: "auth    required    pam_unix.so"
       create: yes
 
-  - name: SRG-OS-000029-GPOS-00010 | deploy | set screen shell, logging, and msg wait
+  - name: SRG-OS-000029-GPOS-00010 | deploy | set screen shell and msg wait
     become: yes
     lineinfile:
       dest: /etc/screenrc
@@ -59,3 +59,15 @@
       - shell /bin/bash
       - defshell /bin/bash
       - msgwait 0
+
+  - name: SRG-OS-000029-GPOS-00010 | deploy | remove logging from screen if present
+    become: yes
+    lineinfile:
+      dest: /etc/screenrc
+      line: "{{ item }}"
+      state: absent
+    with_items:
+      - deflog on
+      - logstamp on
+      - logfile /tmp/$USER
+
