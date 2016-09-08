@@ -86,3 +86,5 @@ and confidential. See User Agreement for details.
 "
 fi
 
+
+PROMPT_COMMAND='history -a >(tee -a ~/.bash_history | logger -p local6.info -t "$USER[$$] $SSH_CONNECTION")'

@@ -58,7 +58,4 @@
     with_items:
       - shell /bin/bash
       - defshell /bin/bash
-      - deflog on
-      - logstamp on
-      - logfile /tmp/$USER
       - msgwait 0

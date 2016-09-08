@@ -54,5 +54,6 @@
      - include: roles/stig-compliant/tasks/SRG-OS-000095-GPOS-00049.yml
      - include: roles/stig-compliant/tasks/SRG-OS-000080-GPOS-00048.yml
      - include: roles/stig-compliant/tasks/SRG-OS-000096-GPOS-00050.yml
+     - include: roles/stig-compliant/tasks/SRG-OS-000338-GPOS-00130.yml
      - include: roles/stig-compliant/tasks/password_requirements.yml
 
